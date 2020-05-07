@@ -1,0 +1,10 @@
+syntax = "proto3";
+package Service;
+
+//商品模型
+message ProdModel {
+     // @inject_tag: json:"prod_id"
+     int32 prod_id = 1;
+     // @inject_tag: json:"prod_name"
+     string prod_name = 2;
+ }
