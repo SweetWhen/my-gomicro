@@ -6,6 +6,7 @@ package Service
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	_ "github.com/golang/protobuf/ptypes/timestamp"
 	math "math"
 )
 

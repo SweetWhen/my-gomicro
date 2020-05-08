@@ -6,10 +6,9 @@ import (
     "github.com/micro/go-micro/client"
     "github.com/micro/go-micro/client/selector"
     "github.com/micro/go-micro/registry"
-    "github.com/micro/go-micro/registry/etcd"
     myhttp "github.com/micro/go-plugins/client/http"
     "github.com/micro/go-plugins/registry/consul"
-    Models "go-micro-study/bak/models"
+    grpcSvc "go-micro-study/Services"
     "io/ioutil"
     "log"
     "net/http"
@@ -19,8 +18,8 @@ func callApi2(s selector.Selector)  {
     myClient := myhttp.NewClient(client.Selector(s),
         client.ContentType("application/json"),
         )
-    request := myClient.NewRequest("prodservice", "/v1/prods", Models.ProdsReq{Size: 1})
-    var resp Models.ProdListResp
+    request := myClient.NewRequest("httpprodservice", "/v1/prods", grpcSvc.ProdsReq{Size: 1})
+    var resp grpcSvc.ProdListResp
 
     err := myClient.Call(context.Background(), request, &resp)
     if err != nil {
@@ -49,12 +48,12 @@ func callApi(addr string, path string, method string) (string, error)  {
 }
 
 func main()  {
-    //consulReg := consul.NewRegistry(
-    //    registry.Addrs("192.168.1.101:8500"),
-    //    )
-    etcdReg := etcd.NewRegistry(registry.Addrs("127.0.0.1:2379"))
+    Reg := consul.NewRegistry(
+       registry.Addrs("192.168.1.101:8500"),
+       )
+    //Reg := etcd.NewRegistry(registry.Addrs("127.0.0.1:2379"))
     mySeletor := selector.NewSelector(
-        selector.Registry(etcdReg),
+        selector.Registry(Reg),
         selector.SetStrategy(selector.Random),
         )
 

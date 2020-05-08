@@ -8,7 +8,7 @@ import (
     "github.com/micro/go-micro/metadata"
     "github.com/micro/go-micro/registry"
     "github.com/micro/go-micro/web"
-    "github.com/micro/go-plugins/registry/etcd"
+    "github.com/micro/go-plugins/registry/consul"
     grpcSvc "go-micro-study/Services"
     "go-micro-study/webLib"
     "go-micro-study/wrappers"
@@ -30,11 +30,12 @@ func NewLogWrapper(c client.Client) client.Client  {
 }
 
 func main()  {
-    //consulReg := consul.NewRegistry(
-    //    registry.Addrs("192.168.1.101:8500"), //服务发现地址，也就是前
-    //    // 面启动的consul
-    //)
-    etcdReg := etcd.NewRegistry(registry.Addrs("127.0.0.1:2379"))
+    //consul启动： consul.exe agent -server -bootstrap -ui -client 0.0.0.0 -bind 192.168.1.101 -data-dir=F:/consul_data
+    Reg := consul.NewRegistry(
+       registry.Addrs("192.168.1.101:8500"), //服务发现地址，也就是前
+       // 面启动的consul
+    )
+    //Reg := etcd.NewRegistry(registry.Addrs("127.0.0.1:2379"))
     mySvc := micro.NewService(
         micro.Name("prodservice.client"),
         micro.WrapClient(NewLogWrapper),
@@ -45,10 +46,10 @@ func main()  {
         web.Name("httpprodservice"), //服务名称
         web.Address(":8001"), //监听端口
         web.Handler(webLib.NewGinRouter(prodSvc)), //将gin引入
-        web.Registry(etcdReg), //将consul引入
+        web.Registry(Reg), //将consul引入
      )
 
 
-    httpSvc.Init()
+    httpSvc.Init() //在使用到命令行参数的时候使用到： go run prod_main.go --server_address :8001
     httpSvc.Run() //启动
 }

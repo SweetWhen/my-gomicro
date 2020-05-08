@@ -1,6 +1,16 @@
 syntax = "proto3";
 package Service;
 
+//处理日期时间的pb
+import "google/protobuf/timestamp.proto";
+
+message UserModel {
+    int32 user_id = 1;
+    string user_name = 2;
+    string user_pwd = 3;
+    google.protobuf.Timestamp user_date = 4;
+}
+
 //商品模型
 message ProdModel {
      // @inject_tag: json:"prod_id"
