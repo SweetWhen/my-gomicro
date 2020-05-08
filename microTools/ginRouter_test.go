@@ -13,7 +13,7 @@ import (
     "testing"
 )
 
-
+//跑micro registry，可以将外部服务注册进micro中
 func TestRouter(t *testing.T)  {
     ginRouter := gin.Default()
     v1 := ginRouter.Group("/v1")
@@ -24,7 +24,7 @@ func TestRouter(t *testing.T)  {
     }
     server := &http.Server{Addr:":8088", Handler:ginRouter}
     svc := sidecar.NewService("api.jtthink.com.test1")
-    svc.AddNode("test-"+uuid.New().String(), 8088, "127.0.0.1:8088")
+    svc.AddNode("test-"+uuid.New().String(), 8088, "127.0.0.1")
     handler := make(chan error)
     go func() {
         handler <- server.ListenAndServe()
