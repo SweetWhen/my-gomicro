@@ -6,6 +6,7 @@ require (
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
 	github.com/coreos/etcd v3.3.18+incompatible // indirect
 	github.com/gin-gonic/gin v1.5.0
+	github.com/go-ini/ini v1.56.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.3.5
@@ -31,3 +32,5 @@ require (
 	gopkg.in/go-playground/validator.v9 v9.31.0
 	sigs.k8s.io/yaml v1.2.0 // indirect
 )
+
+replace github.com/Unknwon/com v1.0.1 => github.com/Unknwon/com v1.0.1
