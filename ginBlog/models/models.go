@@ -2,6 +2,7 @@ package models
 
 import (
     "fmt"
+    _ "github.com/go-sql-driver/mysql"
     "github.com/jinzhu/gorm"
     "go-micro-study/ginBlog/pkg/setting"
     "log"
@@ -12,7 +13,7 @@ var db *gorm.DB
 type Model struct {
     ID int `gorm:"primary_key" json:"id"`
     CreatedOn int `json:"create_on"`
-    ModifyedOn int  `json:"modifyed_on"`
+    ModifiedOn uint64 `json:"modified_on"`
 }
 
 func init()  {
