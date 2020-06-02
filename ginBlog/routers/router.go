@@ -10,13 +10,18 @@ import (
 	v1 "go-micro-study/ginBlog/routers/api/v1"
 )
 
+var swagHandler gin.HandlerFunc
+
 func InitRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 	gin.SetMode(setting.RunMode)
 	r.GET("/auth", api.GetAuth)
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.GET("/hello", api.Hello)
+	if swagHandler != nil {
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	}
 	apiv1 := r.Group("/api/v1")
 	//apiv1.Use(jwt.JWT())
 	{

@@ -48,3 +48,21 @@ func GetAuth(c *gin.Context) {
 		"data": data,
 	})
 }
+
+// @Summary 测试SayHello
+// @Description 向你说Hello
+// @Tags 测试
+// @Accept mpfd
+// @Produce json
+// @Param who query string true "人名"
+// @Success 200 {string} string "{"msg": "hello Razeen"}"
+// @Failure 400 {string} string "{"msg": "who are you"}"
+// @Router /hello [get]
+func Hello(c *gin.Context) {
+	who := c.Query("who")
+	if who == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"msg": "get nil who param"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"msg": "hello " + who})
+}
